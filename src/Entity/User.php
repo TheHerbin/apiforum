@@ -7,15 +7,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ApiResource()
  */
 class User implements UserInterface
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -133,6 +135,7 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
+
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
@@ -143,7 +146,6 @@ class User implements UserInterface
     {
         return $this->nom;
     }
-
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
@@ -195,7 +197,8 @@ class User implements UserInterface
 
     public function removeMessage(Message $message): self
     {
-        if ($this->messages->removeElement($message)) {
+        if ($this->messages->contains($message)) {
+            $this->messages->removeElement($message);
             // set the owning side to null (unless already changed)
             if ($message->getUser() === $this) {
                 $message->setUser(null);
@@ -204,4 +207,4 @@ class User implements UserInterface
 
         return $this;
     }
-}
+}    

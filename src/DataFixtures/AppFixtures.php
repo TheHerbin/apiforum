@@ -28,7 +28,6 @@ class AppFixtures extends Fixture
         $this->loadMessages();
 
         $manager->flush();
-
     }
 
     public function loadUsers(){
@@ -81,7 +80,6 @@ class AppFixtures extends Fixture
             $message->setMessage($this->getReference('message'.mt_rand(0,19+$i)));
             $this->addReference('message'.(20+$i), $message);
             $this->manager->persist($message);
-
         }    
 
         $this->manager->flush();
